@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dicas de Home Office</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #822495, #618abd);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .presentation {
+      width: 90%;
+      max-width: 900px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .slide {
+      display: none;
+      padding: 40px;
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+      color: #79d4e4;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      background: rgba(255,255,255,0.2);
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      color: #fff;
+      background: #2a2b2a68;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background:  #518bba61;
+    }
+
+    .progress {
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #ffffff;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+    <!-- Barra de progresso -->
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Slide 1 -->
+    <div class="slide active">
+      <h1>Dicas de Home Office</h1>
+      <h2>Apresentação Escolar</h2>
+      <p>Vamos conhecer algumas práticas para melhorar sua produtividade trabalhando em casa.</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+      <h2>1. Tenha um Espaço de Trabalho</h2>
+      <ul>
+        <li>Escolha um local tranquilo 💻</li>
+        <li>Mantenha a mesa organizada 🗂️</li>
+        <li>Boa iluminação é essencial 💡</li>
+      </ul>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <h2>2. Estabeleça Rotina</h2>
+      <ul>
+        <li>Defina horários fixos ⏰</li>
+        <li>Faça pausas regulares ☕</li>
+        <li>Separe tempo para lazer 🎮</li>
+      </ul>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+      <h2>3. Cuide da Saúde</h2>
+      <ul>
+        <li>Alongue-se durante o dia 🧘</li>
+        <li>Mantenha uma boa postura 🪑</li>
+        <li>Alimente-se de forma saudável 🥗</li>
+      </ul>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+      <h2>4. Comunicação</h2>
+      <ul>
+        <li>Use ferramentas de videoconferência 📹</li>
+        <li>Mantenha contato com colegas 🤝</li>
+        <li>Compartilhe seu progresso 📊</li>
+      </ul>
+    </div>
+
+    <!-- Slide Final -->
+    <div class="slide">
+      <h2>Conclusão</h2>
+      <p>Com disciplina e organização, o home office pode ser produtivo e saudável. 🚀</p>
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+      <button id="prev">◀ Anterior</button>
+      <button id="next">Próximo ▶</button>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const progressBar = document.getElementById("progressBar");
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+      progressBar.style.width = ((index+1)/slides.length)*100 + "%";
+    }
+
+    prevBtn.addEventListener("click", () => {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    });
+
+    // Navegação por teclado
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      } else if (e.key === "ArrowLeft") {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+      }
+    });
+
+    // Inicializa barra de progresso
+    showSlide(current);
+  </script>
+</body>
+</html>
